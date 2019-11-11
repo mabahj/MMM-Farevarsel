@@ -1,4 +1,5 @@
 
+
 # Module: MMM-Farevarsel
 The `MMM-Farevarsel` module is a <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> addon. This module displays weather alerts (text based) from the Norwegian Meteorological Institute (https://api.met.no/). I used [TuxDiver's MMM-Rest](https://github.com/Tuxdiver/MMM-Rest) as a starting point for this module.
 
@@ -7,10 +8,14 @@ The `MMM-Farevarsel` module is a <a href="https://github.com/MichMich/MagicMirro
 ![Farevarsel Displays](https://raw.githubusercontent.com/wiki/mabahj/MMM-Farevarsel/images/screenshot.png)
 
 ## Installation
-1. Navigate into your MagicMirror's 'modules' folder and execute 'git clone https://github.com/mabahj/MMM-Farevarsel.git'
-2. cd 'cd MMM-Farevarsel'
-3. Execute 'npm install' to install the node dependencies.
-
+Run the following commands
+````console
+pi@raspberrypi:~ $ cd ~/MagicMirror/modules
+pi@raspberrypi:~/MagicMirror/modules $ git clone https://github.com/mabahj/MMM-Farevarsel.git'
+pi@raspberrypi:~/MagicMirror/modules $ cd MMM-Farevarsel
+pi@raspberrypi:~/MagicMirror/modules/MMM-Farevarsel $ npm install 
+````
+Do not forget the "npm install" at the end - it fetches the required sub dependencies.
 
 ## Changelog
 2019-11-11: First attempt at creating a (this) Magic Mirror Module.
@@ -79,3 +84,4 @@ The following properties can be configured. Non of these are required, but <b>co
     </tr>
   </tbody>
 </table>
+
