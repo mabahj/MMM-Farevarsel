@@ -1,0 +1,18 @@
+.redAlert {
+  background-color: red;
+  color: white;
+}
+
+.orangeAlert {
+  background-color: orange;
+  color: white;
+}
+
+.yellowAlert {
+  background-color: yellow;
+  color: black;
+}
+
+.someSpace {
+  line-height: 5px;
+}

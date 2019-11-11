@@ -1,0 +1,15 @@
+{
+  "name": "magic-mirror-module-farevarsel",
+  "version": "0.0.5",
+  "description": "Shows weather alerts from met.no - Norwegian language only",
+  "main": "MMM-Farevarsel.js",
+  "author": "mabahj",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mabahj/MMM-Farevarsel.git"
+  },
+  "dependencies": {
+    "rss-parser": ""
+  }
+}
