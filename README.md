@@ -11,7 +11,7 @@ The `MMM-Farevarsel` module is a <a href="https://github.com/MichMich/MagicMirro
 Run the following commands
 ````console
 pi@raspberrypi:~ $ cd ~/MagicMirror/modules
-pi@raspberrypi:~/MagicMirror/modules $ git clone https://github.com/mabahj/MMM-Farevarsel.git'
+pi@raspberrypi:~/MagicMirror/modules $ git clone https://github.com/mabahj/MMM-Farevarsel.git
 pi@raspberrypi:~/MagicMirror/modules $ cd MMM-Farevarsel
 pi@raspberrypi:~/MagicMirror/modules/MMM-Farevarsel $ npm install 
 ````
@@ -22,7 +22,7 @@ Do not forget the "npm install" at the end - it fetches the required sub depende
 
 
 ## Known Issues
-- I am not a software developer. There are probably a lot of things that can fail. 
+- I am not a software developer. There are probably a lot of things that can fail. But it work just fine for me.
 
 ## Using the module
 
