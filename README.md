@@ -56,7 +56,7 @@ The following properties can be configured. Non of these are required, but <b>co
   <tbody>
     <tr>
       <td valign="top"><code>county</code></td>
-      <td>02</ts>
+      <td>03</ts>
       <td>The county (in Norway) to fetch weather alerts for. Two digits are required, so prefix with 0 if single digit
       See https://register.geonorge.no/sosi-kodelister/fylkesnummer-alle for a list of counties. Default is Oslo.<br>
             </td>
