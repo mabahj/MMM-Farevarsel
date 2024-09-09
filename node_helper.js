@@ -3,7 +3,7 @@
  *
  * By mabahj
  * MIT Licensed
- * Based on MMM-Rest by Dirk Melchers  
+ * Based on MMM-Rest by Dirk Melchers
  */
 var NodeHelper = require('node_helper');
 var request = require('request');
@@ -19,13 +19,21 @@ module.exports = NodeHelper.create({
         if (notification === 'MMM_REST_REQUEST') {
             var that = this;
             let fullUrl=payload.url+'?county='+payload.county;
-            // FIXME: Have to to figure out how to add user agent (https://api.met.no/conditions_service.html)
             request({
-                url: fullUrl,
-                method: 'GET'
+              url: fullUrl,
+              method: 'GET',
+              headers: {
+                'User-Agent': 'MMM-Farevarsel https://github.com/mabahj/MMM-Farevarsel'
+              }
             }, function(error, response, body) {
-                //console.log("MMM_REST response:"+response.statusCode);
-                if (!error && response.statusCode == 200) {
+                // Print any error to console
+                if (error) {
+                    console.error('Could not fetch Farevarsel. Response: ' + response);
+                }
+                else if (response.statusCode != 200) {
+                  console.error('Got an HTTP error while fetching Farevarsel. HTTP status code: ' + response.statusCode);
+                }
+                else {
                     this.parser = new Parser({
                       customFields: {
                         item: ['description','description'],
@@ -33,12 +41,11 @@ module.exports = NodeHelper.create({
                     });
 
                     this.parser.parseString(response.body, function(err, feed) {
-                      //console.log(feed.title);
                       alerts=[];
-                      feed.items.forEach(function(entry) {                        
+                      feed.items.forEach(function(entry) {
                         let sections=entry.title.split(',');
                         let alertTitle=sections[0];
-                        
+
                         let alertColor=sections[1];
                         if (alertColor.indexOf("gult") != -1) {
                           alertColor="YELLOW";
@@ -49,8 +56,8 @@ module.exports = NodeHelper.create({
                         } else {
                           alertColor="???";
                         }
-                          
-                          
+
+
                         let description=entry.description
                         description=description.replace("Update: ", "");  // Remove prefix we do not need
                         description=description.replace("Alert: ", "");   // Remove prefix we do not need
@@ -60,12 +67,12 @@ module.exports = NodeHelper.create({
                           text:  description
                         }
                         alerts.push(alert);
-                        console.log("MMM-Farevarsel fetched alert:" + alert.text);                       
-                        
-                      })                      
+                        console.log("MMM-Farevarsel fetched alert:" + alert.text);
+
+                      })
                       that.sendSocketNotification('MMM_REST_RESPONSE', alerts);
-                      
-                      
+
+
                     });
 
                 }
