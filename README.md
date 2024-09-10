@@ -1,11 +1,10 @@
 
-
 # Module: MMM-Farevarsel
 The `MMM-Farevarsel` module is a <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> addon. This module displays weather alerts (text based) from the Norwegian Meteorological Institute (https://api.met.no/). I used [TuxDiver's MMM-Rest](https://github.com/Tuxdiver/MMM-Rest) as a starting point for this module.
 
 **The alerts only cover  Norwegian areas and are (therefore) only in Norwegian**
 
-![Farevarsel Displays](https://raw.githubusercontent.com/wiki/mabahj/MMM-Farevarsel/images/screenshot.png)
+![Farevarsel Displays](screenshot.png)
 
 ## Installation
 Run the following commands
