@@ -5,6 +5,7 @@
  * MIT Licensed
  * Based on MMM-Rest by Dirk Melchers
  */
+const Log = require('logger');
 var NodeHelper = require('node_helper');
 var request = require('request');
 var Parser = require('rss-parser'); // https://www.npmjs.com/package/rss-parser
@@ -12,7 +13,7 @@ var Parser = require('rss-parser'); // https://www.npmjs.com/package/rss-parser
 module.exports = NodeHelper.create({
     start: function () {
         this.parser = null;
-        console.log(this.name + ' helper started ...');
+        Log.log(this.name + ' helper started ...');
     },
 
     socketNotificationReceived: function(notification, payload) {
@@ -28,10 +29,10 @@ module.exports = NodeHelper.create({
             }, function(error, response, body) {
                 // Print any error to console
                 if (error) {
-                    console.error('Could not fetch Farevarsel. Response: ' + response);
+                    Log.error('Could not fetch Farevarsel. Response: ' + response);
                 }
                 else if (response.statusCode != 200) {
-                  console.error('Got an HTTP error while fetching Farevarsel. HTTP status code: ' + response.statusCode);
+                  Log.error('Got an HTTP error while fetching Farevarsel. HTTP status code: ' + response.statusCode);
                 }
                 else {
                     this.parser = new Parser({
@@ -67,7 +68,7 @@ module.exports = NodeHelper.create({
                           text:  description
                         }
                         alerts.push(alert);
-                        console.log("MMM-Farevarsel fetched alert:" + alert.text);
+                        Log.log("MMM-Farevarsel fetched alert:" + alert.text);
 
                       })
                       that.sendSocketNotification('MMM_REST_RESPONSE', alerts);
