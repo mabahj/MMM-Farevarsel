@@ -6,78 +6,60 @@
  * Based on MMM-Rest by Dirk Melchers
  */
 const Log = require('logger');
-var NodeHelper = require('node_helper');
-var request = require('request');
-var Parser = require('rss-parser'); // https://www.npmjs.com/package/rss-parser
+const NodeHelper = require('node_helper');
+const Parser = require('rss-parser'); // https://www.npmjs.com/package/rss-parser
 
 module.exports = NodeHelper.create({
-    start: function () {
+    start() {
         this.parser = null;
-        Log.log(this.name + ' helper started ...');
+        Log.log(`${this.name} helper started ...`);
     },
 
-    socketNotificationReceived: function(notification, payload) {
+    async socketNotificationReceived(notification, payload) {
         if (notification === 'MMM_REST_REQUEST') {
-            var that = this;
-            let fullUrl=payload.url+'?county='+payload.county;
-            request({
-              url: fullUrl,
-              method: 'GET',
-              headers: {
-                'User-Agent': 'MMM-Farevarsel https://github.com/mabahj/MMM-Farevarsel'
-              }
-            }, function(error, response, body) {
-                // Print any error to console
-                if (error) {
-                    Log.error('Could not fetch Farevarsel. Response: ' + response);
-                }
-                else if (response.statusCode != 200) {
-                  Log.error('Got an HTTP error while fetching Farevarsel. HTTP status code: ' + response.statusCode);
-                }
-                else {
-                    this.parser = new Parser({
-                      customFields: {
-                        item: ['description','description'],
-                      }
-                    });
+            const fullUrl = `${payload.url}?county=${payload.county}`;
+            console.error('fullUrl', fullUrl);
 
-                    this.parser.parseString(response.body, function(err, feed) {
-                      alerts=[];
-                      feed.items.forEach(function(entry) {
-                        let sections=entry.title.split(',');
-                        let alertTitle=sections[0];
-
-                        let alertColor=sections[1];
-                        if (alertColor.indexOf("gult") != -1) {
-                          alertColor="YELLOW";
-                        } else if (alertColor.indexOf("rødt") != -1) {
-                          alertColor="RED";
-                        } else if (alertColor.indexOf("oransje") != -1) {
-                          alertColor="ORANGE";
-                        } else {
-                          alertColor="???";
-                        }
-
-
-                        let description=entry.description
-                        description=description.replace("Update: ", "");  // Remove prefix we do not need
-                        description=description.replace("Alert: ", "");   // Remove prefix we do not need
-                        let alert={
-                          title: sections[0],
-                          color: alertColor,
-                          text:  description
-                        }
-                        alerts.push(alert);
-                        Log.log("MMM-Farevarsel fetched alert:" + alert.text);
-
-                      })
-                      that.sendSocketNotification('MMM_REST_RESPONSE', alerts);
-
-
-                    });
-
+            this.parser = new Parser({
+                customFields: {
+                    item: ['description', 'description'],
                 }
             });
+
+            try {
+                const feed = await this.parser.parseURL(fullUrl);
+
+                const alerts = feed.items.map((entry) => {
+                    const sections = entry.title.split(',');
+                    const alertTitle = sections[0];
+
+                    let alertColor = sections[1];
+                    if (alertColor.includes('gult')) {
+                        alertColor = 'YELLOW';
+                    } else if (alertColor.includes('rødt')) {
+                        alertColor = 'RED';
+                    } else if (alertColor.includes('oransje')) {
+                        alertColor = 'ORANGE';
+                    } else {
+                        alertColor = '???';
+                    }
+
+                    let { description } = entry;
+                    description = description.replace('Update: ', '');
+                    description = description.replace('Alert: ', '');
+                    const alert = {
+                        title: sections[0],
+                        color: alertColor,
+                        text: description
+                    };
+                    Log.log(`MMM-Farevarsel fetched alert: ${alert.text}`);
+                    return alert;
+                });
+
+                this.sendSocketNotification('MMM_REST_RESPONSE', alerts);
+            } catch (error) {
+                Log.error(`Could not fetch Farevarsel. Error: ${error.message}`);
+            }
         }
     }
 });

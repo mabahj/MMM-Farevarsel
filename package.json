@@ -1,6 +1,6 @@
 {
   "name": "magic-mirror-module-farevarsel",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Shows weather alerts from met.no - Norwegian language only.",
   "main": "MMM-Farevarsel.js",
   "author": "mabahj",
@@ -16,7 +16,6 @@
     "Norwegian"
   ],
   "dependencies": {
-    "rss-parser": "",
-    "request": ""
+    "rss-parser": ""
   }
 }
