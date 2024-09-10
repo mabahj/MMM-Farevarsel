@@ -1,35 +1,40 @@
 
 # Module: MMM-Farevarsel
-The `MMM-Farevarsel` module is a <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> addon. This module displays weather alerts (text based) from the Norwegian Meteorological Institute (https://api.met.no/). I used [TuxDiver's MMM-Rest](https://github.com/Tuxdiver/MMM-Rest) as a starting point for this module.
 
-**The alerts only cover  Norwegian areas and are (therefore) only in Norwegian**
+The `MMM-Farevarsel` module is a [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror) addon. This module displays weather alerts (text based) from the Norwegian Meteorological Institute (<https://api.met.no/>). I used [TuxDiver's MMM-Rest](https://github.com/Tuxdiver/MMM-Rest) as a starting point for this module.
+
+**The alerts only cover Norwegian areas and are (therefore) only in Norwegian**
 
 ![Farevarsel Displays](screenshot.png)
 
 ## Installation
+
 Run the following commands
+
 ````console
-pi@raspberrypi:~ $ cd ~/MagicMirror/modules
-pi@raspberrypi:~/MagicMirror/modules $ git clone https://github.com/mabahj/MMM-Farevarsel.git
-pi@raspberrypi:~/MagicMirror/modules $ cd MMM-Farevarsel
-pi@raspberrypi:~/MagicMirror/modules/MMM-Farevarsel $ npm install
+cd ~/MagicMirror/modules
+git clone https://github.com/mabahj/MMM-Farevarsel
+cd MMM-Farevarsel
+npm install
 ````
+
 Do not forget the "npm install" at the end - it fetches the required sub dependencies.
 
 ## Changelog
-2019-11-11: First attempt at creating a (this) Magic Mirror Module.</br>
-2024-09-09: Updated to 2.0 API, the previous was depreciated. Added user agent, as required by met.no. Added some county information in the README.md and improved information when it failed (server side error log)
 
+- 2019-11-11: First attempt at creating a (this) MagicMirror Module.
+- 2024-09-09: Updated to 2.0 API, the previous was depreciated. Added user agent, as required by met.no. Added some county information in the README.md and improved information when it failed (server side error log)
 
 ## Known Issues
+
 - I am not a software developer. There are probably a lot of things that can fail. But it work just fine for me.
 - It depends on some deprecated modules with (or without) security issues. I run this internally only, but you may have other considerations. PRs welcome. :)
 
 ## Using the module
 
 To use this module, add it to the modules array in the `config/config.js` file:
+
 ````javascript
-modules: [
   {
     module: 'MMM-Farevarsel',
     position: 'top_bar',      // This can be any of the regions. I think.
@@ -37,13 +42,12 @@ modules: [
       county: 02,             // See below
       colorBackground: true,
     },
-  }
-]
+  },
 ````
 
 ## Configuration options
 
-The following properties can be configured. Non of these are required, but <b>county</b> is probably valuable to set unless you live in Oslo.
+The following properties can be configured. Non of these are required, but **county** is probably valuable to set unless you live in Oslo.
 
 <table width="100%">
   <!-- why, markdown... -->
@@ -105,4 +109,3 @@ The following properties can be configured. Non of these are required, but <b>co
     </tr>
   </tbody>
 </table>
-
