@@ -21,6 +21,7 @@ module.exports = NodeHelper.create({
             Log.debug(`${this.name} fullUrl: ${fullUrl}`);
 
             this.parser = new Parser({
+                headers: {'User-Agent': 'MMM-Farevarsel https://github.com/mabahj/MMM-Farevarsel'},
                 customFields: {
                     item: ['description', 'description'],
                 }
