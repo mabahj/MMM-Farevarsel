@@ -18,7 +18,7 @@ module.exports = NodeHelper.create({
     async socketNotificationReceived(notification, payload) {
         if (notification === 'MMM_REST_REQUEST') {
             const fullUrl = `${payload.url}?county=${payload.county}`;
-            console.error('fullUrl', fullUrl);
+            Log.debug(`${this.name} fullUrl: ${fullUrl}`);
 
             this.parser = new Parser({
                 customFields: {
