@@ -16,6 +16,6 @@
     "Norwegian"
   ],
   "dependencies": {
-    "rss-parser": ""
+    "rss-parser": "^3.13.0"
   }
 }
