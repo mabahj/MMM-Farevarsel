@@ -22,6 +22,7 @@ Do not forget the "npm install" at the end - it fetches the required sub depende
 
 ## Changelog
 
+- 2025-05-26: Added support for lat/lon, which can be used instead of county.
 - 2024-09-10: Review: Remove deprecated dependency 'request' and little changes like formatting and typos. No functional changes.
 - 2024-09-09: Updated to 2.0 API, the previous was depreciated. Added user agent, as required by met.no. Added some county information in the README.md and improved information when it failed (server side error log).
 - 2019-11-11: First attempt at creating a (this) MagicMirror Module.
@@ -39,7 +40,8 @@ To use this module, add it to the modules array in the `config/config.js` file:
     module: 'MMM-Farevarsel',
     position: 'top_bar',      // This can be any of the regions. I think.
     config: {
-      county: '02',           // See below
+      //county: '02',            // See below for counties.
+      lat: 61.6360, lon: 8.3146,  // Galdhøpiggen. Use county or lat/lon.
       colorBackground: true,
     },
   },
@@ -60,9 +62,24 @@ The following properties can be configured. Non of these are required, but **cou
   <thead>
   <tbody>
     <tr>
+      <td valign="top"><code>lat</code></td>
+      <td></td>
+      <td>Latitude position for alerts. Only Norway is supported. Use lat/lon or county, not both.<br>
+        <br><b>Example:</b> <code>61.6360</code>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top"><code>lon</code></td>
+      <td></td>
+      <td>Longitude position for alerts. Only Norway is supported. Use lat/lon or county, not both.<br>
+        <br><b>Example:</b> <code>8.3146</code>
+      </td>
+    </tr>
+    <tr>
       <td valign="top"><code>county</code></td>
       <td><code>'03'</code></td>
-      <td>The county (in Norway) to fetch weather alerts for. Two digits are required, so prefix with 0 if single digit.
+      <td><strong>(Latitude and longitude is recommended instead of county.)</strong></br>
+      The county (in Norway) to fetch weather alerts for. Two digits are required, so prefix with 0 if single digit.
       See https://data.norge.no/datasets/dd05acaa-1c89-4139-8612-0ad10e75d6a6 for a list of counties. Default is '03' for Oslo.<br>This field is a string, so it must be enclosed in quotation marks: E.g. '02' or “02”.
         <table>
         <tr><th>Code as of 2024-09-09</th><th>Country (fylke)</th></th>

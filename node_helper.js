@@ -17,7 +17,22 @@ module.exports = NodeHelper.create({
 
     async socketNotificationReceived(notification, payload) {
         if (notification === 'MMM_REST_REQUEST') {
-            const fullUrl = `${payload.url}?county=${payload.county}`;
+
+            let fullUrl = '';
+            if (payload.lat !== 0 && payload.lon !== 0) {
+                fullUrl = `${payload.url}?lat=${payload.lat}&lon=${payload.lon}`;
+                Log.debug(`${this.name}: Fetching alert for lat/lon: ${payload.lat}, ${payload.lon}`);
+            } else if (payload.county !== '0') {
+                fullUrl = `${payload.url}?county=${payload.county}`;
+                Log.debug(`${this.name}: Fetching alert for county: ${payload.county}`);
+            }
+
+            // Error if fullUrl is still empty
+            if (!fullUrl) {
+                Log.error(`${this.name}: fullUrl is empty. Cannot fetch Farevarsel.`);
+                return;
+            }
+
             Log.debug(`${this.name} fullUrl: ${fullUrl}`);
 
             this.parser = new Parser({
@@ -43,6 +58,7 @@ module.exports = NodeHelper.create({
                         alertColor = 'ORANGE';
                     } else {
                         alertColor = '???';
+                        Log.debug(`${this.name}: Unknown alert color: ${alertColor}`);
                     }
 
                     let { description } = entry;

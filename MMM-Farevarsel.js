@@ -40,7 +40,21 @@ Module.register('MMM-Farevarsel', {
       Log.info(`Starting module: ${this.name}`);
 
       this.url = this.config.url;
-      this.county = this.config.county;
+      this.county = this.config.county || '0';
+      this.lat = typeof this.config.lat !== 'undefined' ? this.config.lat : 0;
+      this.lon = typeof this.config.lon !== 'undefined' ? this.config.lon : 0;
+
+      // Ensure either county or (lat, lon) is provided
+      if (
+        (!this.county || this.county === '0') &&
+        (this.lat === 0 || this.lon === 0)
+      ) {
+        this.county = '03'; // Default to Oslo if neither is provided
+      }
+
+      // Show county, lat, lon in debug mode
+      Log.debug(`${this.name}: County: ${this.county}, Lat: ${this.lat}, Lon: ${this.lon}`);
+
       this.colorBackground = this.config.colorBackground;
 
       this.loaded = false;
@@ -111,7 +125,9 @@ Module.register('MMM-Farevarsel', {
           'MMM_REST_REQUEST',
           {
               url: this.url,
-              county: this.county
+              county: this.county,
+              lat: this.lat,
+              lon: this.lon
           }
       );
 
