@@ -69,20 +69,13 @@ module.exports = NodeHelper.create({
                         color: alertColor,
                         text: description
                     };
-                    Log.log(`${this.name}: fetched alert: ${alert.text}`);
+                    Log.log(`MMM-Farevarsel fetched alert: ${alert.text}`);
                     return alert;
                 });
 
                 this.sendSocketNotification('MMM_REST_RESPONSE', alerts);
             } catch (error) {
-                Log.error(`${this.name}: Could not fetch Farevarsel from URL ${fullUrl}. Error: ${error.message}. More details: ${error.stack}`);
-                // Return yellow alert saying that the service is unavailable:
-                const alert = {
-                    title: 'Error',
-                    color: 'YELLOW',
-                    text: 'Could not fetch alerts from met.no'
-                };
-                this.sendSocketNotification('MMM_REST_RESPONSE', [alert]);
+                Log.error(`Could not fetch Farevarsel. Error: ${error.message}`);
             }
         }
     }
