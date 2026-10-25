@@ -98,12 +98,15 @@ Module.register('MMM-Farevarsel', {
                   case 'RED':
                       header.classList.add('redAlert');
                       text.classList.add('redAlert');
+                      break;
                   case 'YELLOW':
                       header.classList.add('yellowAlert');
                       text.classList.add('yellowAlert');
+                      break;
                   case 'ORANGE':
                       header.classList.add('orangeAlert');
                       text.classList.add('orangeAlert');
+                      break;
               }
           }
           // Alert title:
