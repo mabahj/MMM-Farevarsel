@@ -32,6 +32,7 @@ npm install
 
 ## Changelog
 
+- 2026-10-25: Fixed red alerts showing as yellow and missing color on marine alerts. Updated county codes and general improvements to README.
 - 2025-05-26: Added support for lat/lon, which can be used instead of county.
 - 2024-09-10: Review: Remove deprecated dependency 'request' and little changes like formatting and typos. No functional changes.
 - 2024-09-09: Updated to 2.0 API, the previous was depreciated. Added user agent, as required by met.no. Added some county information in the README.md and improved information when it failed (server side error log).
